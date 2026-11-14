@@ -60,6 +60,9 @@ function App() {
     (record) => record.id === selectedRecord
   )!;
 
+  // The sound engine lives in public/studio.html. The record number is passed in the URL hash (#1..#4).
+  const studioUrl = `${import.meta.env.BASE_URL}studio.html#${Number(selected.id)}`;
+
   return (
     <main className="app-shell">
       <nav className="navbar">
@@ -196,9 +199,8 @@ function App() {
         <div className="record-grid">
           {records.map((record) => (
             <button
-              className={`record-card ${record.color} ${
-                selectedRecord === record.id ? "selected" : ""
-              }`}
+              className={`record-card ${record.color} ${selectedRecord === record.id ? "selected" : ""
+                }`}
               key={record.id}
               onClick={() => {
                 setSelectedRecord(record.id);
@@ -258,6 +260,10 @@ function App() {
         </a>
         <span>HEAR THE PLANET CHANGE.</span>
         <span>AN INDEPENDENT NASA SPACE APPS PROJECT · 2026</span>
+        <p className="credit">
+          Visualizations: NASA Earth Information Center / Scientific Visualization Studio.
+          This project is not endorsed by NASA.
+        </p>
       </footer>
 
       {studioOpen && (
@@ -286,7 +292,11 @@ function App() {
               <span>SELECTED RECORD</span>
               <h3>{selected.title}</h3>
               <p>{selected.description}</p>
-              <small>Studio audio engine will be connected in the next development phase.</small>
+              <a className="primary-button launch" href={studioUrl}>
+                <Play size={17} fill="currentColor" />
+                Launch {selected.title}
+                <ArrowUpRight size={17} />
+              </a>
             </div>
           </div>
         </div>
