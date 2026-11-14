@@ -1,4 +1,4 @@
-
+import "./App.css";
 import { useState } from "react";
 import {
   ArrowDown,
@@ -14,7 +14,7 @@ import {
   Waves,
   X,
 } from "lucide-react";
-import "./App.css";
+
 
 const records = [
   {

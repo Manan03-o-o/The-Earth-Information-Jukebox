@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  font-family: 'Space Grotesk', sans-serif;
+  color: #edf2f8;
+  background: #070a10;
+}
 .counter {
   font-size: 16px;
   padding: 5px 10px;
