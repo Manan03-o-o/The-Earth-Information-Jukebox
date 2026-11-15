@@ -133,10 +133,7 @@ function App() {
 
       <section className="hero" id="experience">
         <div className="hero-content">
-          <div className="eyebrow">
-            <span className="live-dot" />
-            
-          </div>
+          
 
           <h1>
             HEAR THE
