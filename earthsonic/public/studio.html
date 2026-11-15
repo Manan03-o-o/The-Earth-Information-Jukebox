@@ -140,10 +140,16 @@ footer{max-width:1400px;margin:auto;padding:20px;color:var(--mut);border-top:1px
 /* ---------- CONFIG (Real NASA Frames Support) ---------- */
 const REAL_FRAMES = {
   'night-lights': 'frames/night-lights/',
-  'lightning-from-the-iss': 'frames/lightning-from-the-iss/',
+  'lightning-from-the-iss': 'frames/lightning/',
   'geos-aerosols': 'frames/geos-aerosols/',
   'ocean-currents': 'frames/ocean-currents/'
 };
+
+const FRAME_SETTINGS = {
+  'night-lights': { count: 120, padding: 3 },
+  'lightning-from-the-iss': { count: 433, padding: 4 }
+};
+
 const MAX_FRAMES = 120;
 
 function onToneError() {
@@ -215,15 +221,21 @@ function preloadFramesForRecord(slug, onComplete) {
     callbacks: onComplete ? [onComplete] : []
   };
   const dir = REAL_FRAMES[slug];
-  let idx = 1;
-  const loaded = [];
+
+const settings = FRAME_SETTINGS[slug] || {
+  count: MAX_FRAMES,
+  padding: 3
+};
+
+let idx = 1;
+const loaded = [];
 
   function tryNext() {
-    if (idx > MAX_FRAMES) {
+    if (idx > settings.count)  {
       finish();
       return;
     }
-    const num = String(idx).padStart(3, '0');
+    const num = String(idx).padStart(settings.padding, '0');
     const img = new Image();
     img.src = `${dir}${num}.jpg`;
     img.onload = () => {
