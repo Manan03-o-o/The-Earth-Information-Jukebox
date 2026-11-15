@@ -135,7 +135,7 @@ function App() {
         <div className="hero-content">
           <div className="eyebrow">
             <span className="live-dot" />
-            NASA SPACE APPS CHALLENGE 2026
+            
           </div>
 
           <h1>
