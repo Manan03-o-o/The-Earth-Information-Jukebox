@@ -16,6 +16,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# Large source videos are kept locally, not pushed
+/*.mp4
+
 # Environment and local files
 *.local
 .env
