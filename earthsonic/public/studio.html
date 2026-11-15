@@ -64,11 +64,11 @@ footer{max-width:1400px;margin:auto;padding:20px;color:var(--mut);border-top:1px
 <div class="card" aria-labelledby="exh"><h2 id="exh">Explain this sound</h2><div id="explain"></div></div></aside></main>
 
 <section id="science" class="sci"><h2>The story behind the sound</h2><dl id="story"></dl>
-<h3>Honest limits</h3><p>All frames in this build are procedurally generated demonstration frames, not NASA observations. Even with real NASA frames, pixels are visual proxies: brightness or color is not measured temperature, aerosol concentration or current speed. Numerical datasets should replace pixel proxies wherever available.</p>
+<h3>Honest limits</h3><p>Night Lights uses real frames from NASA's Scientific Visualization Studio ("Change in Night Lights between 2012 and 2023"), the other records currently use synthetic demonstration frames, and pixels are visual proxies (brightness or color is not measured temperature, aerosol concentration or current speed). Numerical datasets should replace pixel proxies wherever available.</p>
 <h3>Mapping table</h3><p>Brightness → pitch (D minor pentatonic, D3–C6) · hue → timbre (Artistic mode) · horizontal position → stereo pan · vertical position → pitch variation · frame difference → filter brightness, urgency and tempo · sudden bright flash → percussion · pixel density → note density.</p></section>
 <footer id="about"><p>Visualizations: NASA Earth Information Center / Scientific Visualization Studio. This project is not endorsed by NASA.</p><p>Built for NASA Space Apps Challenge 2026 (The Earth Information Jukebox). Audio: Tone.js. All sound is generated live from the analysed frame; nothing is prerecorded.</p></footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js" onerror="window.__tone_load_error = true;"></script>
+<script src="vendor/Tone.js"></script>
 <script>
 /* ---------- CONFIG (Real NASA Frames Support) ---------- */
 const REAL_FRAMES = {
@@ -80,7 +80,7 @@ const REAL_FRAMES = {
 const MAX_FRAMES = 120;
 
 function onToneError() {
-  const s = $('#status');
+  const s = document.querySelector('#status');
   if (s) {
     s.textContent = 'Audio engine (Tone.js) failed to load from CDN. Check your internet connection or ad blocker.';
     s.style.color = '#ef4444';
@@ -213,8 +213,8 @@ const cls=h=>{let b=0,bd=999;HUES.forEach((x,k)=>{const d=Math.min(Math.abs(h-x)
 /* ---------- records ---------- */
 const REC=[
 {slug:'night-lights',name:'Night Lights',sub:'Change in Night Lights, 2012–2023',gen:genNight,
- see:'Bright clusters of light on a dark map; the demo frames brighten and gain new clusters from 2012 to 2023.',feat:'Pixel brightness, position, and change against the 2012 baseline.',par:'Brightness → pitch. Newly brightened clusters → one octave up. Left–right → pan. Clusters → soft arpeggios.',why:'A brighter or newly lit area is a brighter, higher note.',
- story:[['What it is','Nighttime lights track where people live and how illumination changes over time.'],['Why it matters','Lights reveal growth, recovery and change in human settlements.'],['What to listen for','Higher notes where lights are brighter; a rising octave where new light appears.'],['Source and limits','Synthetic demo frames. Real NASA frames can replace them in the data folder.']]},
+ see:'Bright clusters of light on a dark map; the frames brighten and gain new clusters from 2012 to 2023.',feat:'Pixel brightness, position, and change against the 2012 baseline.',par:'Brightness → pitch. Newly brightened clusters → one octave up. Left–right → pan. Clusters → soft arpeggios.',why:'A brighter or newly lit area is a brighter, higher note.',
+ story:[['What it is','Nighttime lights track where people live and how illumination changes over time.'],['Why it matters','Lights reveal growth, recovery and change in human settlements.'],['What to listen for','Higher notes where lights are brighter; a rising octave where new light appears.'],['Source and limits','Real NASA SVS frames. Brightness is a visual proxy for light, not a measurement.']]},
 {slug:'lightning-from-the-iss',name:'Lightning from the ISS',sub:'Flashes seen from orbit',gen:genLight,
  see:'Short bright flashes over dark clouds.',feat:'Sudden bright pixels, their position and intensity.',par:'Flash → percussion hit. Up–down → pitch. Left–right → pan. Intensity → volume. More flashes → denser rhythm.',why:'Each flash is a drum hit placed where it appears.',
  story:[['What it is','Lightning events observed by instruments on the International Space Station.'],['Why it matters','Lightning reflects storm activity and atmospheric electricity.'],['What to listen for','Drum hits; busy storms sound like rapid rhythms.'],['Source and limits','Synthetic demo flashes, not real observations.']]},
@@ -233,7 +233,7 @@ const ST={int:1,art:false,cat:[0,0,0,0],temp:0,dir:0},nodes=[];
 const mix=[0,1,2,3].map(()=>({m:false,s:false}));
 
 window.A = null;
-window.Tone = typeof Tone !== 'undefined' ? Tone : null;
+if (typeof Tone !== 'undefined') window.Tone = Tone;
 
 /* ---------- audio ---------- */
 async function initAudio(){
@@ -282,12 +282,12 @@ function triggerNotes(R,f,col){
   A.pan.pan.rampTo(panv,.03);A.pan2.pan.rampTo(panv,.03);
   const note=(y,c)=>nodes.push({x:col,y,c,l:1});
   if(ri==0){
-    const rows=[];for(let y=0;y<GH;y++)if(f.br[px(y)]>.22)rows.push(y);
+    const rows=[];for(let y=0;y<GH;y++)if(f.br[px(y)]>.07)rows.push(y);
     rows.sort((a,b)=>f.br[px(a)]-f.br[px(b)]);
-    const n=Math.min(ST.art?4:3,rows.length,Math.ceil(f.density*10));
+    const n=Math.min(ST.art?4:3,rows.length,Math.max(1,Math.ceil(f.density*10)));
     if(ST.art&&n){const ty=mapColorToInstrument(f.hue[px(rows[rows.length-1])]);if(ty!==curType){curType=ty;A.lead.set({oscillator:{type:ty}})}}
     rows.slice(-n).forEach((y,k)=>{
-      const i=px(y);let idx=mapToScale(.75*f.br[i]+.25*(1-y/GH));
+      const i=px(y);let idx=mapToScale(.75*Math.sqrt(f.br[i])+.25*(1-y/GH));
       if(f.sd[i]>.12)idx=Math.min(14,idx+5);
       A.lead.triggerAttackRelease(SCALE[idx],'8n',now+k*.07,calculateNoteVelocity(f.br[i],I));
       note(y,f.sd[i]>.12?'#fbbf24':'#22d3ee')
@@ -351,7 +351,8 @@ function describe(){
   const R=REC[ri];
   const isReal=!!getRealFrames(ri);
   const dTag=isReal?'NASA visualization.':'Demonstration data.';
-  return ri==0?`Night Lights, ${yr()}. ${F&&F.meanDiff>.004?'Bright clusters are expanding across the region.':'Lit areas are mostly unchanged.'} Higher-pitched notes represent brighter areas. ${dTag}`:ri==1?`Lightning activity. ${ev} flash events detected so far, played as percussion. ${dTag}`:ri==2?`Aerosols. The strongest layer is ${CATN[ST.cat.indexOf(Math.max(...ST.cat))]}. Each particle type has its own instrument. ${dTag}`:`Ocean currents are flowing continuously. Warmer-looking water sounds higher; faster change sounds busier. ${dTag}`;
+  const nlYear=(ri==0&&getRealFrames(0))?'':`, ${yr()}`;
+  return ri==0?`Night Lights${nlYear}. ${F&&F.meanDiff>.004?'Bright clusters are expanding across the region.':'Lit areas are mostly unchanged.'} Higher-pitched notes represent brighter areas. ${dTag}`:ri==1?`Lightning activity. ${ev} flash events detected so far, played as percussion. ${dTag}`:ri==2?`Aerosols. The strongest layer is ${CATN[ST.cat.indexOf(Math.max(...ST.cat))]}. Each particle type has its own instrument. ${dTag}`:`Ocean currents are flowing continuously. Warmer-looking water sounds higher; faster change sounds busier. ${dTag}`;
 }
 function say(txt,force){const now=performance.now();if(!force&&now-lastSay<12000)return;lastSay=now;$('#live').textContent=txt;$('#cap').textContent=txt;if(ad&&window.speechSynthesis){speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(txt))}}
 function setStatus(m){$('#status').textContent=m}
@@ -381,6 +382,12 @@ function setRecord(i){
       gc.drawImage(sc.canvas,0,0,GW,GH);
       base=analyzeFrame(gc.getImageData(0,0,GW,GH).data,null).br;
       updateBadge();
+      if (ri === 0) {
+        const b1 = $('#y12'), b2 = $('#y23'), yl = $('#yl');
+        if (b1) b1.textContent = 'Compare: start';
+        if (b2) b2.textContent = 'end';
+        if (yl) yl.style.display = 'none';
+      }
       say(describe(), false);
     }
   });
@@ -389,7 +396,8 @@ function setRecord(i){
   $('#rt').textContent=R.name+' — '+R.sub;
   $('#explain').innerHTML=`<h3>What the computer sees</h3>${R.see}<h3>Feature extracted</h3>${R.feat}<h3>Audio parameter</h3>${R.par}<h3>Why this sound</h3>${R.why}`;
   $('#story').innerHTML=R.story.map(s=>`<dt>${s[0]}</dt><dd>${s[1]}</dd>`).join('');
-  $('#extra').innerHTML=ri==0?'<div class="row"><button class="btn" id="y12">Compare: 2012</button><button class="btn" id="y23">2023</button><span id="yl"></span></div>':ri==2?'<div class="row" role="group" aria-label="Aerosol mixer" style="flex-direction:column;align-items:stretch">'+CATN.map((n,k)=>`<div class="row"><span style="width:70px;color:${CATC[k]}">${n}</span><div class="meter"><div id="m${k}" style="background:${CATC[k]}"></div></div><button class="btn mb" data-k="${k}" data-t="m" aria-pressed="${mix[k].m}" aria-label="Mute ${n}">M</button><button class="btn mb" data-k="${k}" data-t="s" aria-pressed="${mix[k].s}" aria-label="Solo ${n}">S</button></div>`).join('')+'</div>':'';
+  const isRealNL = !!getRealFrames(0);
+  $('#extra').innerHTML=ri==0?`<div class="row"><button class="btn" id="y12">Compare: ${isRealNL?'start':'2012'}</button><button class="btn" id="y23">${isRealNL?'end':'2023'}</button><span id="yl"${isRealNL?' style="display:none"':''}></span></div>`:ri==2?'<div class="row" role="group" aria-label="Aerosol mixer" style="flex-direction:column;align-items:stretch">'+CATN.map((n,k)=>`<div class="row"><span style="width:70px;color:${CATC[k]}">${n}</span><div class="meter"><div id="m${k}" style="background:${CATC[k]}"></div></div><button class="btn mb" data-k="${k}" data-t="m" aria-pressed="${mix[k].m}" aria-label="Mute ${n}">M</button><button class="btn mb" data-k="${k}" data-t="s" aria-pressed="${mix[k].s}" aria-label="Solo ${n}">S</button></div>`).join('')+'</div>':'';
   if(ri==0){$('#y12').onclick=()=>{t=0};$('#y23').onclick=()=>{t=DUR*.999}}
   document.querySelectorAll('.mb').forEach(b=>b.onclick=()=>{const m=mix[b.dataset.k];m[b.dataset.t]=!m[b.dataset.t];b.setAttribute('aria-pressed',m[b.dataset.t]);updateMix()});
   applyPreset();say(describe(),true)
@@ -523,11 +531,11 @@ function tick(now){
     mc.font='bold 13px sans-serif';
     mc.fillText('DEMO / SYNTHETIC DATA — not NASA observations',14,25);
   }
-  if(ri==0){mc.fillStyle='#fff';mc.font='bold 28px sans-serif';mc.fillText(yr(),W-90,H-14)}
+  if(ri==0 && !getRealFrames(0)){mc.fillStyle='#fff';mc.font='bold 28px sans-serif';mc.fillText(yr(),W-90,H-14)}
   drawVinyl(dt);drawViz();
   if(now-lastUI>200){lastUI=now;$('#tl').value=p*1000;const pc=v=>Math.round(v*100)+'%';
-  $('#ind').textContent=ri==0?`Year ${yr()} · lit pixels ${pc(F.density)} · change since 2012 ${(F.meanDiff*100).toFixed(1)}% · column ${col+1}/64`:ri==1?`Flash events ${ev} · peak intensity ${pc(F.max)} · column ${col+1}/64`:ri==2?`Strongest layer: ${CATN[ST.cat.indexOf(Math.max(...ST.cat))]} · column ${col+1}/64`:`Warmth proxy ${pc(ST.temp)} · current proxy ${pc(ST.dir)} · column ${col+1}/64`;
-  if(ri==2)ST.cat.forEach((v,k)=>{const m=$('#m'+k);if(m)m.style.width=pc(v)});if(ri==0&&$('#yl'))$('#yl').textContent='Year '+yr();
+  $('#ind').textContent=ri==0?`${getRealFrames(0)?'':`Year ${yr()} · `}lit pixels ${pc(F.density)} · change since 2012 ${(F.meanDiff*100).toFixed(1)}% · column ${col+1}/64`:ri==1?`Flash events ${ev} · peak intensity ${pc(F.max)} · column ${col+1}/64`:ri==2?`Strongest layer: ${CATN[ST.cat.indexOf(Math.max(...ST.cat))]} · column ${col+1}/64`:`Warmth proxy ${pc(ST.temp)} · current proxy ${pc(ST.dir)} · column ${col+1}/64`;
+  if(ri==2)ST.cat.forEach((v,k)=>{const m=$('#m'+k);if(m)m.style.width=pc(v)});if(ri==0&&$('#yl')&&!getRealFrames(0))$('#yl').textContent='Year '+yr();
   if(playing)say(describe(),false)}
   requestAnimationFrame(tick);
 }
