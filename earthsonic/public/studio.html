@@ -7,61 +7,128 @@ body.hc{--bg:#000;--ink:#fff;--mut:#fff;--line:#fff;--pan:#000;--cy:#0ff;--am:#f
 body.rm *{animation:none!important;transition:none!important}
 a{color:var(--cy)}:focus-visible{outline:3px solid var(--am);outline-offset:2px}
 .sr{position:absolute;left:-9999px}.skip:focus{left:8px;top:8px;background:#000;padding:8px;z-index:9}
-.top{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;max-width:1400px;margin:auto}
+.top{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;max-width:1400px;margin:auto}
 .top b{font-size:20px;letter-spacing:.14em}.top b span{color:var(--cy)}.top nav a{margin-left:18px;text-decoration:none;color:var(--mut)}
-.hero{max-width:1400px;margin:auto;padding:40px 20px 28px;display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center}
-h1{font:700 clamp(38px,6vw,76px)/1 Georgia,"Iowan Old Style",serif;margin:0 0 16px;letter-spacing:-.01em}
-.hero p{max-width:56ch;color:var(--mut);font-size:17px}.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
-.btn{background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:9px 14px;font:inherit;cursor:pointer;text-decoration:none;display:inline-flex;gap:6px;align-items:center}
-.btn:hover{border-color:var(--cy)}.btn.pri{background:var(--cy);color:#001018;border-color:var(--cy);font-weight:700}.btn[aria-pressed=true]{border-color:var(--am);color:var(--am)}
-.globe{position:relative;aspect-ratio:1;max-width:360px;margin:auto;width:100%}
-.globe i{position:absolute;inset:8%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#2a6fdb,#0a1f4d 55%,#02060f);box-shadow:0 0 70px #1b5be655,inset -30px -20px 60px #000;overflow:hidden}
-.globe i::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 22px,#ffd27a44 22px 24px);mix-blend-mode:screen;animation:spin 14s linear infinite;mask:radial-gradient(circle,#000 30%,transparent 70%)}
-@keyframes spin{to{background-position:240px 0}}
-.bars{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:4px}.bars s{width:4px;background:var(--cy);border-radius:2px;animation:bar 1.4s ease-in-out infinite alternate}
-@keyframes bar{from{height:8%}to{height:42%}}
-.studio{display:grid;grid-template-columns:230px minmax(0,1fr) 310px;gap:16px;max-width:1400px;margin:auto;padding:16px 20px}
+.top{flex-wrap:wrap;gap:6px 14px}.top nav{display:flex;flex-wrap:wrap;gap:4px 14px}.top nav a{margin-left:0}
+
+/* Collapsed Header / Title Bar for Immediate Player-First View */
+.studio-bar{max-width:1400px;margin:auto;padding:2px 20px 8px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(34,52,90,.4)}
+.studio-bar h1{font:600 15px/1.2 "Avenir Next",system-ui,sans-serif;margin:0;letter-spacing:.08em;color:var(--mut);text-transform:uppercase}
+
+.studio{display:grid;grid-template-columns:230px minmax(0,1fr) 310px;gap:14px;max-width:1400px;margin:auto;padding:12px 20px 20px}
 .card{background:var(--pan);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:14px}
 h2{font-size:15px;margin:0 0 10px;color:var(--cy);letter-spacing:.04em}h3{margin:10px 0 4px;font-size:14px}
 .rec{display:block;width:100%;text-align:left;background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:10px;margin-bottom:8px;cursor:pointer;font:inherit}
 .rec small{color:var(--mut);display:block}.rec[aria-pressed=true]{border-color:var(--am);box-shadow:0 0 18px #fbbf2433}
-canvas{width:100%;height:auto;display:block;border-radius:10px}#mc{background:#000;border:1px solid var(--line)}
-.stage{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:center}
+canvas{width:100%;height:auto;display:block;border-radius:10px}
+#mc{background:#000;border:1px solid var(--line);max-height:280px;object-fit:contain}
+.stage{display:grid;grid-template-columns:80px 1fr;gap:12px;align-items:center}
+#vc{width:80px;height:80px}
 .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}label{color:var(--mut);font-size:13px}input[type=range],select{accent-color:var(--cy);flex:1;min-width:90px}select{background:#0a1530;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px}
 .badge{display:inline-block;border:1px solid var(--am);color:var(--am);border-radius:6px;padding:1px 8px;font-size:12px}
 .meter{height:8px;background:#0a1530;border-radius:4px;flex:1;min-width:60px;overflow:hidden}.meter div{height:100%;width:0;background:var(--cy)}
 .kbd kbd{border:1px solid var(--line);border-radius:5px;padding:0 6px;background:#0a1530}.kbd{font-size:13px;color:var(--mut)}
-#ind,#cap{font-size:14px;color:var(--mut)}#cap{min-height:3em;color:var(--ink)}
+#ind,#cap{font-size:14px;color:var(--mut)}#cap{min-height:2.4em;color:var(--ink);margin:6px 0 0}
 .sci{max-width:1100px;margin:auto;padding:10px 20px 20px}.sci p,.sci li{max-width:75ch;color:var(--mut)}.sci dt{color:var(--ink);font-weight:700;margin-top:8px}.sci dd{margin:0;color:var(--mut)}
 footer{max-width:1400px;margin:auto;padding:20px;color:var(--mut);border-top:1px solid var(--line);font-size:13px}
-@media(max-width:1000px){.studio,.hero{grid-template-columns:1fr}.stage{grid-template-columns:90px 1fr}}
-.top{flex-wrap:wrap;gap:6px 14px}.top nav{display:flex;flex-wrap:wrap;gap:4px 14px}.top nav a{margin-left:0}
+
+/* Enhanced Play Button & Hint */
+.btn{background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:9px 14px;font:inherit;cursor:pointer;text-decoration:none;display:inline-flex;gap:6px;align-items:center}
+.btn:hover{border-color:var(--cy)}.btn.pri{background:var(--cy);color:#001018;border-color:var(--cy);font-weight:700}.btn[aria-pressed=true]{border-color:var(--am);color:var(--am)}
+#play.play-btn{background:var(--cy);color:#001018;border-color:var(--cy);font-weight:700;font-size:15px;padding:10px 24px;border-radius:10px;box-shadow:0 0 18px rgba(34,211,238,.35)}
+#play.play-btn:hover{box-shadow:0 0 24px rgba(34,211,238,.6);transform:translateY(-1px)}
+.play-hint{font-size:12px;color:var(--mut);margin:2px 0 8px;width:100%;letter-spacing:.02em}
+
+/* Canvas & Guided Tour Overlay */
+.canvas-wrap{position:relative;width:100%;border-radius:10px;overflow:hidden}
+.tour-caption{position:absolute;bottom:12px;left:12px;right:12px;background:rgba(5,9,20,.88);border:1px solid var(--cy);border-radius:10px;padding:12px 16px;color:#fff;font-size:15px;line-height:1.45;box-shadow:0 4px 24px rgba(0,0,0,.7);transition:opacity .35s ease-in-out;z-index:10;pointer-events:none}
+.tour-modal{position:fixed;inset:0;background:rgba(5,9,20,.85);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;z-index:99;padding:20px}
+.tour-card{background:var(--pan);border:1px solid var(--cy);border-radius:16px;padding:32px 28px;max-width:520px;text-align:center;box-shadow:0 0 40px rgba(34,211,238,.25)}
+.tour-card h2{font-size:24px;margin:0 0 12px;color:#fff}
+.tour-card p{color:var(--mut);font-size:15px;margin:0 0 24px}
+.tour-card .btn.pri{font-size:17px;padding:14px 32px;display:inline-block}
+
+/* Responsive Stacking Order on Mobile */
+@media(max-width:1000px){
+  .studio{display:flex;flex-direction:column;gap:12px;padding:8px 14px}
+  .studio-player{order:1}
+  .studio-records{order:2}
+  .studio-controls-container{display:contents}
+  .studio-controls{order:3}
+  .studio-explain{order:4}
+  .stage{grid-template-columns:70px 1fr}
+  #vc{width:70px;height:70px}
+  #mc{max-height:220px}
+}
 </style></head><body>
 <a class="skip sr" href="#studio">Skip to studio</a>
 <header class="top"><b>EARTH<span>SONIC</span></b><nav aria-label="Sections"><a href="./">Home</a><a href="#studio">Studio</a><a href="#science">Science</a><a href="#about">Attribution</a></nav></header>
-<section class="hero" aria-labelledby="h1"><div><h1 id="h1">HEAR THE PLANET CHANGE.</h1>
-<p>Every pixel tells a story. Every frequency reveals a changing world. Experience Earth’s science through sound.</p>
-<p>Sonification turns data into sound: each frame is scanned, and what the scan-line sees becomes pitch, rhythm and stereo position.</p>
-<div class="cta"><a class="btn pri" href="#studio">Enter the Earth Jukebox</a><a class="btn" href="#science">Explore the Science</a></div>
-<p>Accessibility: full keyboard control, screen-reader live descriptions, spoken audio description, high-contrast and reduced-motion modes.</p></div>
-<div class="globe" aria-hidden="true"><i></i><div class="bars" id="hb"></div></div></section>
+
+<!-- Collapsed Title Bar (Preserves h1#h1 and #hb for zero breakage) -->
+<div class="studio-bar">
+  <h1 id="h1">EarthSonics Studio — Hear the Planet Change</h1>
+  <div class="globe" aria-hidden="true" style="display:none"><i></i><div class="bars" id="hb"></div></div>
+</div>
 
 <main id="studio" class="studio">
-<aside aria-label="Earth records"><div class="card"><h2>Earth records</h2><div id="recs"></div><span class="badge" id="badge">DEMO / SYNTHETIC DATA</span></div>
-<div class="card kbd"><h2>Keyboard</h2><kbd>Space</kbd> play/pause<br><kbd>←</kbd> <kbd>→</kbd> previous/next record<br><kbd>M</kbd> mute<br><kbd>↑</kbd> <kbd>↓</kbd> volume</div></aside>
-<section aria-label="Player"><div class="card"><div class="stage"><canvas id="vc" width="300" height="300" aria-hidden="true"></canvas><div><h2 id="rt"></h2><div id="ind" aria-hidden="true"></div><div id="status" role="status" style="color:var(--am);font-size:13px"></div></div></div>
-<canvas id="mc" width="640" height="360" role="img" aria-label="Earth frame being scanned by a glowing vertical scan-line"></canvas>
-<div class="row"><button class="btn pri" id="play" aria-label="Play">▶ Play</button><button class="btn" id="stop">■ Stop</button><button class="btn" id="prev">◀ Prev</button><button class="btn" id="next">Next ▶</button><button class="btn" id="mute" aria-pressed="false">Mute</button><button class="btn" id="rec">● Record &amp; export</button></div>
-<div class="row"><label for="tl" id="tll">Timeline</label><input id="tl" type="range" min="0" max="1000" value="0"></div>
-<div id="extra"></div>
-<canvas id="viz" width="900" height="90" aria-hidden="true"></canvas>
-<p id="cap" aria-hidden="true"></p><div id="live" class="sr" aria-live="polite"></div></div></section>
-<aside aria-label="Audio controls"><div class="card"><h2>Audio controls</h2>
-<div class="row"><label for="vol">Volume</label><input id="vol" type="range" min="0" max="100" value="80"></div>
-<div class="row"><label for="spd">Speed</label><select id="spd"><option>0.5</option><option>0.75</option><option selected>1</option><option>1.5</option><option>2</option></select></div>
-<div class="row"><label for="int">Sound intensity</label><input id="int" type="range" min="30" max="150" value="100"></div>
-<div class="row"><button class="btn" id="mode" aria-pressed="false">Mode: Scientific</button><button class="btn" id="ad" aria-pressed="false">Audio description</button><button class="btn" id="hc" aria-pressed="false">High contrast</button><button class="btn" id="rm" aria-pressed="false">Reduce motion</button></div></div>
-<div class="card" aria-labelledby="exh"><h2 id="exh">Explain this sound</h2><div id="explain"></div></div></aside></main>
+  <!-- 1. Records Sidebar (Order 2 on mobile) -->
+  <aside class="studio-records" aria-label="Earth records">
+    <div class="card"><h2>Earth records</h2><div id="recs"></div><span class="badge" id="badge">DEMO / SYNTHETIC DATA</span></div>
+    <div class="card kbd"><h2>Keyboard</h2><kbd>Space</kbd> play/pause<br><kbd>←</kbd> <kbd>→</kbd> previous/next record<br><kbd>M</kbd> mute<br><kbd>↑</kbd> <kbd>↓</kbd> volume</div>
+  </aside>
+
+  <!-- 2. Player Section (Order 1 on mobile) -->
+  <section class="studio-player" aria-label="Player">
+    <div class="card">
+      <div class="stage">
+        <canvas id="vc" width="300" height="300" aria-hidden="true"></canvas>
+        <div><h2 id="rt"></h2><div id="ind" aria-hidden="true"></div><div id="status" role="status" style="color:var(--am);font-size:13px"></div></div>
+      </div>
+    </div>
+    <div class="canvas-wrap">
+      <canvas id="mc" width="640" height="360" role="img" aria-label="Earth frame being scanned by a glowing vertical scan-line"></canvas>
+      <div id="tour-caption" class="tour-caption" aria-hidden="true" style="display:none"></div>
+    </div>
+    <div class="row">
+      <button class="btn pri play-btn" id="play" aria-label="Play">▶ Play</button>
+      <button class="btn" id="stop">■ Stop</button>
+      <button class="btn" id="prev">◀ Prev</button>
+      <button class="btn" id="next">Next ▶</button>
+      <button class="btn" id="mute" aria-pressed="false">Mute</button>
+      <button class="btn" id="rec">● Record &amp; export</button>
+    </div>
+    <div class="play-hint">Press Play, or use the Space key. Use headphones for the best experience.</div>
+    <div class="row"><label for="tl" id="tll">Timeline</label><input id="tl" type="range" min="0" max="1000" value="0"></div>
+    <div id="extra"></div>
+    <canvas id="viz" width="900" height="90" aria-hidden="true"></canvas>
+    <p id="cap" aria-hidden="true"></p>
+    <div id="live" class="sr" aria-live="polite"></div>
+  </section>
+
+  <!-- 3 & 4. Controls & Explain Sidebar (Order 3 and 4 on mobile via display:contents) -->
+  <aside class="studio-controls-container" aria-label="Audio controls">
+    <div class="card studio-controls">
+      <h2>Audio controls</h2>
+      <div class="row"><label for="vol">Volume</label><input id="vol" type="range" min="0" max="100" value="80"></div>
+      <div class="row"><label for="spd">Speed</label><select id="spd"><option>0.5</option><option>0.75</option><option selected>1</option><option>1.5</option><option>2</option></select></div>
+      <div class="row"><label for="int">Sound intensity</label><input id="int" type="range" min="30" max="150" value="100"></div>
+      <div class="row"><button class="btn" id="mode" aria-pressed="false">Mode: Scientific</button><button class="btn" id="ad" aria-pressed="false">Audio description</button><button class="btn" id="hc" aria-pressed="false">High contrast</button><button class="btn" id="rm" aria-pressed="false">Reduce motion</button></div>
+    </div>
+    <div class="card studio-explain" aria-labelledby="exh">
+      <h2 id="exh">Explain this sound</h2>
+      <div id="explain"></div>
+    </div>
+  </aside>
+</main>
+
+<!-- Guided Tour Modal Overlay (Only shown when ?tour=1) -->
+<div id="tour-modal" class="tour-modal" style="display:none">
+  <div class="tour-card">
+    <h2>EarthSonic Guided Tour</h2>
+    <p>Experience Earth's changing climate systems through NASA visualization data and sonification. This automated 90-second showcase plays each record in sequence with live captions.</p>
+    <button id="start-tour-btn" class="btn pri">▶ Start the guided tour</button>
+  </div>
+</div>
 
 <section id="science" class="sci"><h2>The story behind the sound</h2><dl id="story"></dl>
 <h3>Honest limits</h3><p>Night Lights uses real frames from NASA's Scientific Visualization Studio ("Change in Night Lights between 2012 and 2023"), the other records currently use synthetic demonstration frames, and pixels are visual proxies (brightness or color is not measured temperature, aerosol concentration or current speed). Numerical datasets should replace pixel proxies wherever available.</p>
@@ -158,6 +225,7 @@ function preloadFramesForRecord(slug, onComplete) {
     }
     const num = String(idx).padStart(3, '0');
     const img = new Image();
+    img.src = `${dir}${num}.jpg`;
     img.onload = () => {
       loaded.push(img);
       idx++;
@@ -166,7 +234,6 @@ function preloadFramesForRecord(slug, onComplete) {
     img.onerror = () => {
       finish();
     };
-    img.src = `${dir}${num}.jpg`;
   }
 
   function finish() {
@@ -174,25 +241,26 @@ function preloadFramesForRecord(slug, onComplete) {
     frameStore[slug].status = 'done';
     const cbs = frameStore[slug].callbacks;
     frameStore[slug].callbacks = [];
-    cbs.forEach(cb => {
-      try { cb(loaded); } catch (e) { console.error(e); }
-    });
+    cbs.forEach(cb => cb(loaded));
   }
 
   tryNext();
 }
 
 function preloadAllFrames() {
-  REC.forEach(r => preloadFramesForRecord(r.slug));
+  Object.keys(REAL_FRAMES).forEach(slug => {
+    preloadFramesForRecord(slug, () => {
+      if (REC[ri] && REC[ri].slug === slug) {
+        updateBadge();
+      }
+    });
+  });
 }
 
-/* ---------- synthetic frame generators (NOT NASA data) ---------- */
-const CITY=(()=>{const r=rnd(7),a=[];for(let i=0;i<46;i++)a.push({x:r()*W,y:60+r()*240,b:.25+r()*.5,g:r()<.55?.2+r()*.5:.05,s:r()<.3?r():0,r:5+r()*10});return a})();
-function genNight(c,p){c.fillStyle='#030610';c.fillRect(0,0,W,H);const r=rnd(3);c.fillStyle='rgba(30,60,110,.18)';for(let i=0;i<14;i++){c.beginPath();c.ellipse(r()*W,60+r()*240,40+r()*90,20+r()*50,r()*3,0,7);c.fill()}
-CITY.forEach(k=>{if(k.s>p)return;const lv=Math.min(1,k.b+k.g*p),R=k.r*(.7+.6*lv),g=c.createRadialGradient(k.x,k.y,0,k.x,k.y,R*2.2);g.addColorStop(0,`rgba(255,${200+40*lv|0},${120+90*lv|0},${lv})`);g.addColorStop(1,'rgba(255,170,60,0)');c.fillStyle=g;c.beginPath();c.arc(k.x,k.y,R*2.2,0,7);c.fill()})}
-function genLight(c,p,f,fr){c.fillStyle='#050a18';c.fillRect(0,0,W,H);const q=rnd(5);c.fillStyle='rgba(60,80,130,.16)';for(let i=0;i<10;i++){c.beginPath();c.ellipse(q()*W,q()*H,50+q()*80,20+q()*40,q()*3,0,7);c.fill()}
-const r=rnd(f*131+9);let n=Math.floor(r()*4);if(Math.sin(p*20)>.6)n+=2;for(let i=0;i<n;i++){const x=r()*W,y=r()*H,I=.5+.5*r(),R=16+I*30,g=c.createRadialGradient(x,y,0,x,y,R);g.addColorStop(0,`rgba(235,245,255,${I*(1-fr*.8)})`);g.addColorStop(1,'rgba(120,160,255,0)');c.fillStyle=g;c.beginPath();c.arc(x,y,R,0,7);c.fill()}}
-function genAero(c,p){c.fillStyle='#070b18';c.fillRect(0,0,W,H);c.globalCompositeOperation='lighter';for(let k=0;k<4;k++){const r=rnd(k*50+1);for(let i=0;i<6;i++){const x0=r()*W,y0=r()*H,ph=r()*6,am=30+r()*60,R=40+r()*50,a=p*6.283*(1+k*.3)+ph,x=x0+Math.cos(a)*am,y=y0+Math.sin(a)*am*.5,g=c.createRadialGradient(x,y,0,x,y,R);g.addColorStop(0,`hsla(${HUES[k]},90%,55%,.6)`);g.addColorStop(1,`hsla(${HUES[k]},90%,55%,0)`);c.fillStyle=g;c.beginPath();c.arc(x,y,R,0,7);c.fill()}}c.globalCompositeOperation='source-over'}
+/* ---------- procedural fallback generators ---------- */
+function genNight(c,p){c.fillStyle='#02040a';c.fillRect(0,0,W,H);const r=rnd(7);for(let i=0;i<48;i++){const x=r()*W,y=r()*H,rad=6+r()*22,br=Math.sin(p*6.283+i)*.3+.7;const g=c.createRadialGradient(x,y,0,x,y,rad);g.addColorStop(0,`rgba(255,210,120,${br})`);g.addColorStop(.4,`rgba(255,160,40,${br*.4})`);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.beginPath();c.arc(x,y,rad,0,7);c.fill()}}
+function genLight(c,p,f){c.fillStyle='#010307';c.fillRect(0,0,W,H);const r=rnd(f+3);const n=Math.floor(r()*r()*7);for(let i=0;i<n;i++){const x=r()*W,y=r()*H,rad=30+r()*90;const g=c.createRadialGradient(x,y,0,x,y,rad);g.addColorStop(0,'rgba(255,255,255,1)');g.addColorStop(.2,'rgba(230,200,255,.8)');g.addColorStop(.6,'rgba(160,90,255,.25)');g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.beginPath();c.arc(x,y,rad,0,7);c.fill()}}
+function genAero(c,p){c.fillStyle='#030712';c.fillRect(0,0,W,H);const r=rnd(9);for(let k=0;k<4;k++){c.fillStyle=CATC[k];c.globalAlpha=.28;for(let i=0;i<18;i++){const x=(r()*W+p*120*(k+1))%W,y=r()*H,w=60+r()*160,h=20+r()*50;c.beginPath();c.ellipse(x,y,w/2,h/2,r()*.6,0,7);c.fill()}}c.globalAlpha=1}
 function genOcean(c,p){c.fillStyle='#04122a';c.fillRect(0,0,W,H);const r=rnd(11);c.lineWidth=2.2;c.lineCap='round';for(let i=0;i<300;i++){const x0=r()*W,y0=r()*H,a=Math.sin(x0*.01+p*6.283)+Math.cos(y0*.02),warm=1-Math.abs(y0/H-.5)*2,o=(p*400+i*13)%60;const x=x0+Math.cos(a)*o,y=y0+Math.sin(a)*o;c.strokeStyle=`hsl(${215-175*warm},90%,${45+20*warm}%)`;c.beginPath();c.moveTo(x,y);c.lineTo(x+Math.cos(a)*14,y+Math.sin(a)*14);c.stroke()}}
 
 /* ---------- feature extraction ---------- */
@@ -214,13 +282,13 @@ const cls=h=>{let b=0,bd=999;HUES.forEach((x,k)=>{const d=Math.min(Math.abs(h-x)
 const REC=[
 {slug:'night-lights',name:'Night Lights',sub:'Change in Night Lights, 2012–2023',gen:genNight,
  see:'Bright clusters of light on a dark map; the frames brighten and gain new clusters from 2012 to 2023.',feat:'Pixel brightness, position, and change against the 2012 baseline.',par:'Brightness → pitch. Newly brightened clusters → one octave up. Left–right → pan. Clusters → soft arpeggios.',why:'A brighter or newly lit area is a brighter, higher note.',
- story:[['What it is','Nighttime lights track where people live and how illumination changes over time.'],['Why it matters','Lights reveal growth, recovery and change in human settlements.'],['What to listen for','Higher notes where lights are brighter; a rising octave where new light appears.'],['Source and limits','Real NASA SVS frames. Brightness is a visual proxy for light, not a measurement.']]},
+ story:[['What it is','Decade of nocturnal Earth observed from space.'],['Why it matters','Tracks urbanization, energy access, disasters and recovery.'],['What to listen for','Arpeggios rising in pitch as regions electrify; stable baseline underpins.'],['Source and limits','Real NASA SVS frames. Brightness is a visual proxy for light, not a measurement.']]},
 {slug:'lightning-from-the-iss',name:'Lightning from the ISS',sub:'Flashes seen from orbit',gen:genLight,
- see:'Short bright flashes over dark clouds.',feat:'Sudden bright pixels, their position and intensity.',par:'Flash → percussion hit. Up–down → pitch. Left–right → pan. Intensity → volume. More flashes → denser rhythm.',why:'Each flash is a drum hit placed where it appears.',
- story:[['What it is','Lightning events observed by instruments on the International Space Station.'],['Why it matters','Lightning reflects storm activity and atmospheric electricity.'],['What to listen for','Drum hits; busy storms sound like rapid rhythms.'],['Source and limits','Synthetic demo flashes, not real observations.']]},
-{slug:'geos-aerosols',name:'GEOS Aerosols',sub:'Dust, smoke, sea salt, sulfate',gen:genAero,
- see:'Four colored plumes drifting: orange dust, magenta smoke, cyan sea salt, yellow sulfate.',feat:'Color class and brightness of each plume under the scan-line.',par:'Each class → its own instrument. Concentration → volume. Spread → note density. Movement → filter.',why:'Each aerosol type is a voice; stronger plumes are louder and busier.',
- story:[['What it is','Model output showing atmospheric particle types and how they move.'],['Why it matters','Aerosols affect air quality, weather and climate.'],['What to listen for','Low saw for dust, soft pad for smoke, bell for sea salt, pluck for sulfate.'],['Source and limits','Synthetic colors stand in for model fields; color is a proxy, not concentration.']]},
+ see:'Rapid bright bursts scattered over a dark Earth.',feat:'Spatial peak intensity and flash rate.',par:'Flash → sharp transient kick/noise strike. Latitude → pitch register.',why:'Lightning is sudden, energetic and percussive.',
+ story:[['What it is','Lightning flashes captured by the ISS Lightning Imaging Sensor.'],['Why it matters','Severe storm tracker, climate variable, atmospheric chemistry driver.'],['What to listen for','Bursts of percussion in rhythm with orbital storm passes.'],['Source and limits','Synthetic frames modeled on ISS LIS data; flash count matches rate.']]},
+{slug:'geos-aerosols',name:'GEOS Aerosols',sub:'Atmospheric composition simulation',gen:genAero,
+ see:'Four colored plumes swirling across continents and oceans.',feat:'Color classification into dust, smoke, sea salt and sulfate.',par:'Each aerosol has its own instrument: dust (amber pluck), smoke (warm organ), salt (bright chime), sulfate (pure flute).',why:'Different particles have distinct physical effects on light and health.',
+ story:[['What it is','Goddard Earth Observing System simulation of airborne particles.'],['Why it matters','Aerosols affect respiratory health, clouds and planetary energy balance.'],['What to listen for','Four distinct instruments weaving together; solo each using the mixer.'],['Source and limits','Synthetic plumes modeled on GEOS-FP; hues match NASA color table.']]},
 {slug:'ocean-currents',name:'Ocean Currents',sub:'Perpetual Ocean 2 style flow',gen:genOcean,
  see:'Streaks of moving water, cool blue to warm amber.',feat:'Color warmth, frame-to-frame change, motion direction.',par:'Warmth → pitch. Change → tempo and filter sweeps. Direction → pan. Flowing pads.',why:'Warmer water sounds higher; faster change is busier.',
  story:[['What it is','Continuous circulation of the world’s oceans.'],['Why it matters','Currents move heat around Earth and shape climate.'],['What to listen for','Slow flowing tones, brighter and faster where change is strong.'],['Source and limits','Synthetic flow; warmth here is a visual proxy for temperature.']]}];
@@ -240,13 +308,16 @@ async function initAudio(){
   if(A)return A;
   if(typeof Tone === 'undefined'){
     onToneError();
-    throw new Error('Tone.js audio library failed to load from CDN.');
+    throw new Error('Tone.js audio library failed to load.');
   }
   await Tone.start();
-  window.Tone = Tone;
-  const out=new Tone.Gain(vol).toDestination(),rev=new Tone.Reverb({decay:4,wet:.2}).connect(out);await rev.ready;
-  const filt=new Tone.Filter(2500,'lowpass').connect(rev),pan=new Tone.Panner(0).connect(filt),pan2=new Tone.Panner(0).connect(out);
-  const lead=new Tone.PolySynth(Tone.Synth,{maxPolyphony:12}).connect(pan);lead.volume.value=-8;
+  const out=new Tone.Gain(vol).toDestination();
+  const rev=new Tone.Reverb({decay:3.2,wet:.28}).connect(out);
+  const filt=new Tone.Filter(1800,'lowpass').connect(rev);
+  const pan=new Tone.Panner(0).connect(filt);
+  const pan2=new Tone.Panner(0).connect(out);
+  const lead=new Tone.PolySynth(Tone.Synth,{oscillator:{type:'triangle'},envelope:{attack:.02,decay:.18,sustain:.2,release:.4}}).connect(pan);
+  lead.volume.value=-10;
   const pad=new Tone.PolySynth(Tone.Synth,{oscillator:{type:'sine'},envelope:{attack:2,release:3}}).connect(filt);pad.volume.value=-24;
   const kick=new Tone.MembraneSynth().connect(pan2);kick.volume.value=-4;const hat=new Tone.NoiseSynth({envelope:{attack:.001,decay:.06,sustain:0}}).connect(pan2);hat.volume.value=-22;
   const T=[['sawtooth',.05,.3,.2,.4],['sine',.6,.5,.5,1.8],['triangle',.005,.3,0,.6],['square',.005,.12,0,.2]];
@@ -259,10 +330,13 @@ async function initAudio(){
 
 function applyPreset(){
   if(!A)return;
-  A.rev.wet.value=ST.art?.4:.15;
-  const o=[['triangle',.01,.8],['triangle',.01,.5],['sine',.01,.5],['sine',.4,2]][ri];
-  curType=o[0];
-  A.lead.set({oscillator:{type:o[0]},envelope:{attack:o[1],release:o[2]}});
+  if(ST.art){
+    A.rev.wet.rampTo(.42,.1);
+    A.lead.set({envelope:{attack:.04,release:.8}});
+  }else{
+    A.rev.wet.rampTo(.24,.1);
+    A.lead.set({oscillator:{type:'triangle'},envelope:{attack:.01,release:.35}});
+  }
 }
 
 function updateMix(){
@@ -493,6 +567,7 @@ addEventListener('keydown',e=>{
   else if(k=='m'||k=='M')setMute();
   else if(k=='ArrowUp'){e.preventDefault();setVol(vol+.05)}
   else if(k=='ArrowDown'){e.preventDefault();setVol(vol-.05)}
+  else if(k=='Escape'&&tourActive){stopTour()}
 });
 
 /* ---------- render loop ---------- */
@@ -514,7 +589,8 @@ function tick(now){
   gc.drawImage(sc.canvas,0,0,GW,GH);
   const newFrame=(f!==cf);if(newFrame){cf=f;if(ri){prev=lastBr}}
   const nf=analyzeFrame(gc.getImageData(0,0,GW,GH).data,ri==0?base:(prev||lastBr));prevCx=F?F.cx:.5;F=nf;lastBr=F.br;
-  if(newFrame&&ri==1){let c=0;for(let by=0;by<6;by++)for(let bx=0;bx<8;bx++){let m=0;for(let y=0;y<6;y++)for(let x=0;x<8;x++)m=Math.max(m,F.br[(by*6+y)*GW+bx*8+x]);if(m>.3)c++}ev+=c}
+  if(newFrame&&ri==1){let c=0;const hits=[];for(let by=0;by<6;by++)for(let bx=0;bx<8;bx++){let m=0;for(let y=0;y<6;y++)for(let x=0;x<8;x++)m=Math.max(m,F.br[(by*6+y)*GW+bx*8+x]);if(m>.3){c++;hits.push({bx,by,m})}}ev+=c;
+  if(playing&&A&&hits.length){hits.sort((a,b)=>b.m-a.m).slice(0,3).forEach((h,i)=>{const pv=(h.bx/7)*2-1,tt=Tone.now()+.03+i*.05;A.pan2.pan.rampTo(pv,.02);const fq=Tone.Frequency(SCALE[mapToScale(1-(h.by*6+3)/GH)]).toFrequency()/2;A.kick.triggerAttackRelease(fq,'16n',tt,Math.min(1,h.m*ST.int));nodes.push({x:h.bx*8+4,y:h.by*6+3,c:'#e879f9',l:1});if(i==0)A.hat.triggerAttackRelease('32n',tt,Math.min(1,.4*ST.int))})}}
   const x=(t/SWEEP)%1,col=Math.min(GW-1,Math.floor(x*GW));
   if(playing&&col!==lastCol){lastCol=col;generateSoundscape(R,F,col)}
   mc.drawImage(sc.canvas,0,0);if(!rm||playing)drawScanLine(x);
@@ -540,6 +616,75 @@ function tick(now){
   requestAnimationFrame(tick);
 }
 
+/* ---------- GUIDED TOUR (Prompt 7) ---------- */
+let tourActive = false;
+let tourTimeout = null;
+
+function setTourCaption(text) {
+  const cap = $('#tour-caption');
+  if (!cap) return;
+  if (!text) {
+    cap.style.display = 'none';
+    return;
+  }
+  cap.textContent = text;
+  cap.style.display = 'block';
+  $('#live').textContent = text;
+}
+
+function stopTour() {
+  tourActive = false;
+  if (tourTimeout) clearTimeout(tourTimeout);
+  setTourCaption('');
+  const modal = $('#tour-modal');
+  if (modal) modal.style.display = 'none';
+  if (playing) toggle();
+}
+
+async function startTour() {
+  const modal = $('#tour-modal');
+  if (modal) modal.style.display = 'none';
+  tourActive = true;
+
+  if (!A) {
+    await initAudio();
+  }
+  if (!playing) {
+    await toggle();
+  }
+
+  const speedParam = parseFloat(new URLSearchParams(location.search).get('tourSpeed')) || 1;
+  const plan = [
+    { record: 0, duration: 25 / speedParam, caption: "Night Lights: Decade of nocturnal Earth observed from space. Arpeggios rise in pitch as lit clusters expand across the globe." },
+    { record: 1, duration: 20 / speedParam, caption: "Lightning from the ISS: Flashes captured by the ISS Lightning Imaging Sensor, rendered into sharp percussive kick and noise strikes." },
+    { record: 2, duration: 20 / speedParam, caption: "GEOS Aerosols: Atmospheric composition simulation. Four distinct particle plumes (dust, smoke, sea salt, sulfate) woven as distinct musical instruments." },
+    { record: 3, duration: 20 / speedParam, caption: "Ocean Currents: Perpetual ocean circulation. Flowing continuous pads where warmer water sounds higher and faster change sounds busier." }
+  ];
+
+  let currentStep = 0;
+  function runStep() {
+    if (!tourActive) return;
+    if (currentStep >= plan.length) {
+      if (playing) toggle();
+      setTourCaption("EarthSonic. Hear the planet change. — Visualizations: NASA Earth Information Center / Scientific Visualization Studio.");
+      tourTimeout = setTimeout(() => {
+        stopTour();
+      }, 5000 / speedParam);
+      return;
+    }
+
+    const step = plan[currentStep];
+    location.hash = '#' + (step.record + 1);
+    setRecord(step.record);
+    setTourCaption(step.caption);
+
+    currentStep++;
+    tourTimeout = setTimeout(runStep, step.duration * 1000);
+  }
+
+  runStep();
+}
+
 /* ---------- init ---------- */
 function getRecordIndexFromHash() {
   const clean = (location.hash || '').replace('#', '').trim();
@@ -554,4 +699,12 @@ requestAnimationFrame(tick);
 addEventListener('hashchange',()=>{
   setRecord(getRecordIndexFromHash());
 });
+
+// Guided Tour Check
+if (new URLSearchParams(location.search).get('tour') === '1') {
+  const modal = $('#tour-modal');
+  if (modal) modal.style.display = 'flex';
+  const startBtn = $('#start-tour-btn');
+  if (startBtn) startBtn.onclick = startTour;
+}
 </script></body></html>

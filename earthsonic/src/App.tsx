@@ -5,47 +5,67 @@ import {
   ArrowRight,
   ArrowUpRight,
   AudioLines,
+  Contrast,
+  Eye,
+  FileText,
   Globe2,
   Headphones,
+  Image as ImageIcon,
+  Keyboard,
   Menu,
+  Music,
   Play,
   Radio,
+  Sliders,
   Sparkles,
+  Volume2,
   Waves,
   X,
+  Zap,
 } from "lucide-react";
 
+// REAL_RECORDS contains the slugs of records with verified real NASA frames in public/frames/
+// UPDATE THIS ARRAY whenever you add real frames for another record!
+const REAL_RECORDS = ["night-lights"];
 
 const records = [
   {
     id: "01",
+    slug: "night-lights",
     title: "Night Lights",
     category: "HUMAN ACTIVITY",
     description: "Listen to the pulse of our growing cities.",
+    visualization: "Change in Night Lights between 2012 and 2023",
     color: "amber",
     icon: "◉",
   },
   {
     id: "02",
+    slug: "lightning-from-the-iss",
     title: "Lightning",
     category: "ATMOSPHERIC EVENTS",
     description: "Experience the electrical energy of our skies.",
+    visualization: "Lightning Events Detected from the ISS 2017–2023",
     color: "blue",
     icon: "ϟ",
   },
   {
     id: "03",
+    slug: "geos-aerosols",
     title: "Aerosols",
     category: "ATMOSPHERIC SCIENCE",
     description: "Hear invisible particles moving through our air.",
+    visualization: "GEOS Aerosols Atmospheric Composition Simulation",
     color: "violet",
     icon: "✳",
   },
   {
     id: "04",
+    slug: "ocean-currents",
     title: "Ocean Currents",
     category: "OCEAN SCIENCE",
     description: "Discover the rhythm of our moving oceans.",
+    visualization: "Perpetual Ocean 2: Western Boundary Currents",
     color: "cyan",
     icon: "≈",
   },
@@ -55,13 +75,20 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState("01");
   const [studioOpen, setStudioOpen] = useState(false);
+  const [failedAudio, setFailedAudio] = useState<Record<string, boolean>>({});
 
   const selected = records.find(
     (record) => record.id === selectedRecord
   )!;
 
-  // The sound engine lives in public/studio.html. The record number is passed in the URL hash (#1..#4).
   const studioUrl = `${import.meta.env.BASE_URL}studio.html#${Number(selected.id)}`;
+
+  const handleAudioError = (slug: string) => {
+    setFailedAudio((prev) => ({ ...prev, [slug]: true }));
+  };
+
+  const visiblePlaylist = records.filter((r) => !failedAudio[r.slug]);
+  const showPlaylist = visiblePlaylist.length > 0;
 
   return (
     <main className="app-shell">
@@ -77,6 +104,10 @@ function App() {
           <a href="#experience" onClick={() => setMenuOpen(false)}>Experience</a>
           <a href="#records" onClick={() => setMenuOpen(false)}>Earth Records</a>
           <a href="#science" onClick={() => setMenuOpen(false)}>The Science</a>
+          <a href="#how-it-works" onClick={() => setMenuOpen(false)}>How It Works</a>
+          <a href="#accessibility" onClick={() => setMenuOpen(false)}>Accessibility</a>
+          {showPlaylist && <a href="#playlist" onClick={() => setMenuOpen(false)}>Playlist</a>}
+          <a href="#credits" onClick={() => setMenuOpen(false)}>Data &amp; Credits</a>
         </div>
 
         <button
@@ -124,6 +155,13 @@ function App() {
               Enter Earth Jukebox
               <ArrowUpRight size={17} />
             </button>
+
+            <a
+              href={`${import.meta.env.BASE_URL}studio.html?tour=1#1`}
+              className="secondary-button tour-link"
+            >
+              Watch the guided tour <ArrowRight size={15} />
+            </a>
 
             <a href="#science" className="secondary-button">
               Discover the science <ArrowDown size={15} />
@@ -250,6 +288,227 @@ function App() {
             <span><AudioLines size={16} /> Data sonification</span>
             <span><Headphones size={16} /> Accessible science</span>
           </div>
+        </div>
+      </section>
+
+      {/* A) How It Works Section */}
+      <section className="how-it-works-section" id="how-it-works">
+        <div className="section-heading">
+          <div>
+            <div className="eyebrow"><span className="live-dot" /> DATA SONIFICATION PIPELINE</div>
+            <h2>HOW IT <span>WORKS.</span></h2>
+            <p>From orbital observation frames to live synthesized audio in your browser.</p>
+          </div>
+        </div>
+
+        <div className="pipeline-steps">
+          <div className="step-card">
+            <div className="step-num">01</div>
+            <div className="step-icon"><ImageIcon size={28} /></div>
+            <h3>NASA Frame</h3>
+            <p>High-resolution frames from NASA Scientific Visualization Studio and Earth Information Center.</p>
+          </div>
+
+          <div className="step-arrow">→</div>
+
+          <div className="step-card">
+            <div className="step-num">02</div>
+            <div className="step-icon"><Sliders size={28} /></div>
+            <h3>Scan-Line Analysis</h3>
+            <p>A glowing scan-line reads pixel brightness, chromatic hue, coordinates, and frame difference.</p>
+          </div>
+
+          <div className="step-arrow">→</div>
+
+          <div className="step-card">
+            <div className="step-num">03</div>
+            <div className="step-icon"><Music size={28} /></div>
+            <h3>Harmonic Mapping</h3>
+            <p>Visual values are harmonically snapped to a pure D minor pentatonic scale (D3 to C6).</p>
+          </div>
+
+          <div className="step-arrow">→</div>
+
+          <div className="step-card">
+            <div className="step-num">04</div>
+            <div className="step-icon"><Headphones size={28} /></div>
+            <h3>Live Browser Sound</h3>
+            <p>Tone.js synthesizers generate dynamic, multi-timbral polyphonic audio client-side in real time.</p>
+          </div>
+        </div>
+
+        <div className="mapping-table-wrap">
+          <h3>Sonification Mapping Parameters</h3>
+          <table className="mapping-table">
+            <thead>
+              <tr>
+                <th>Visual Feature</th>
+                <th>Physical Meaning</th>
+                <th>Synthesizer Parameter</th>
+                <th>Musical Experience</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Brightness</strong></td>
+                <td>Light / energy intensity</td>
+                <td>Note pitch (D minor scale)</td>
+                <td>Brighter regions sound higher; darkness stays quiet</td>
+              </tr>
+              <tr>
+                <td><strong>Color / Hue</strong></td>
+                <td>Aerosol type / water warmth</td>
+                <td>Instrument timbre (saw, sine, flute)</td>
+                <td>Unique instrumental voice per particle or warmth layer</td>
+              </tr>
+              <tr>
+                <td><strong>X Position</strong></td>
+                <td>Orbital longitude</td>
+                <td>Stereo panning (-1.0 to +1.0)</td>
+                <td>Sound moves across stereo field following the scan-line</td>
+              </tr>
+              <tr>
+                <td><strong>Frame Change</strong></td>
+                <td>Dynamic evolution rate</td>
+                <td>Urgency, filter sweep &amp; tempo</td>
+                <td>Faster climate changes create brighter, busier soundscapes</td>
+              </tr>
+              <tr>
+                <td><strong>Sudden Flash</strong></td>
+                <td>Orbital lightning transient</td>
+                <td>Sub-bass kick &amp; noise percussion</td>
+                <td>Immediate rhythmic percussion pulse for detected flash strikes</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* B) Built For Everyone (Accessibility) Section */}
+      <section className="a11y-section" id="accessibility">
+        <div className="section-heading">
+          <div>
+            <div className="eyebrow"><span className="live-dot" /> INCLUSIVE BY DESIGN</div>
+            <h2>BUILT FOR <span>EVERYONE.</span></h2>
+            <p>Engineered for full accessibility, multimodal comprehension, and diverse sensory needs.</p>
+          </div>
+        </div>
+
+        <div className="a11y-grid">
+          <div className="a11y-card">
+            <div className="a11y-icon"><Keyboard size={24} /></div>
+            <h3>Full Keyboard Control</h3>
+            <p>Complete control via standard keys: Space for play/pause, Left/Right arrows for records, M for mute, and Up/Down for volume.</p>
+          </div>
+
+          <div className="a11y-card">
+            <div className="a11y-icon"><Eye size={24} /></div>
+            <h3>Screen-Reader Live Region</h3>
+            <p>ARIA-live polite announcements describe phenomenon statistics, detected flash events, and active column updates in real time.</p>
+          </div>
+
+          <div className="a11y-card">
+            <div className="a11y-icon"><Volume2 size={24} /></div>
+            <h3>Spoken Audio Description</h3>
+            <p>Integrated browser Web Speech API vocalizes planetary shifts, lighting changes, and aerosol densities aloud as they unfold.</p>
+          </div>
+
+          <div className="a11y-card">
+            <div className="a11y-icon"><Contrast size={24} /></div>
+            <h3>High Contrast Mode</h3>
+            <p>Dedicated high-contrast toggle enforces pure black backgrounds with vibrant cyan, amber, and white exceeding WCAG AAA standards.</p>
+          </div>
+
+          <div className="a11y-card">
+            <div className="a11y-icon"><Zap size={24} /></div>
+            <h3>Reduced Motion Support</h3>
+            <p>Automatic OS preference detection plus manual toggle eliminates vinyl spin, canvas oscillations, and rapid transitions for vestibular safety.</p>
+          </div>
+
+          <div className="a11y-card">
+            <div className="a11y-icon"><FileText size={24} /></div>
+            <h3>Plain-Text "Explain This Sound"</h3>
+            <p>Clear pedagogical breakdowns document exactly what the algorithm sees, which feature is extracted, and why each timbre is played.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* C) Playlist Section (Hidden if all fail) */}
+      {showPlaylist && (
+        <section className="playlist-section" id="playlist">
+          <div className="section-heading">
+            <div>
+              <div className="eyebrow"><span className="live-dot" /> OFFLINE PREVIEWS</div>
+              <h2>THE AUDIO <span>PLAYLIST.</span></h2>
+              <p>Listen directly to 30-second studio recordings exported from our live sonification engine.</p>
+            </div>
+          </div>
+
+          <div className="playlist-grid">
+            {records.map((r) => {
+              if (failedAudio[r.slug]) return null;
+              return (
+                <div key={r.slug} className={`playlist-card ${r.color}`}>
+                  <div className="playlist-top">
+                    <span className="playlist-category">{r.category}</span>
+                    <span className="playlist-badge">
+                      {REAL_RECORDS.includes(r.slug) ? "NASA DATA" : "DEMO"}
+                    </span>
+                  </div>
+                  <h3>{r.title}</h3>
+                  <p>{r.description}</p>
+                  <div className="audio-wrap">
+                    <audio
+                      controls
+                      preload="none"
+                      src={`${import.meta.env.BASE_URL}audio/${r.slug}.webm`}
+                      aria-label={`Listen to 30-second preview of ${r.title}`}
+                      onError={() => handleAudioError(r.slug)}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
+      {/* D) Data and Credits Section */}
+      <section className="credits-section" id="credits">
+        <div className="section-heading">
+          <div>
+            <div className="eyebrow"><span className="live-dot" /> SCIENTIFIC ATTRIBUTION</div>
+            <h2>DATA &amp; <span>CREDITS.</span></h2>
+            <p>Earth observations and atmospheric visualizations powering the EarthSonic experience.</p>
+          </div>
+        </div>
+
+        <div className="credits-grid">
+          {records.map((r) => (
+            <div key={r.slug} className="credit-card">
+              <div className="credit-top">
+                <span className="credit-title">{r.title}</span>
+                <span className={`credit-badge ${REAL_RECORDS.includes(r.slug) ? "real" : "demo"}`}>
+                  {REAL_RECORDS.includes(r.slug) ? "Real NASA frames" : "Demo frames"}
+                </span>
+              </div>
+              <h4>{r.visualization}</h4>
+              <p className="credit-meta">
+                Source: NASA Earth Information Center / Scientific Visualization Studio
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div className="credits-notice">
+          <p>
+            Visualizations: NASA's Scientific Visualization Studio / Earth Information Center.
+            This project is not endorsed by NASA.
+          </p>
+          <p className="sub-notice">
+            Records without real frames use clearly labelled synthetic demonstration frames.
+            Brightness, hue, and optical differences serve as visual proxies for environmental quantities.
+          </p>
         </div>
       </section>
 
