@@ -26,7 +26,12 @@ import {
 
 // REAL_RECORDS contains the slugs of records with verified real NASA frames in public/frames/
 // UPDATE THIS ARRAY whenever you add real frames for another record!
-const REAL_RECORDS = ["night-lights", "lightning-from-the-iss"];
+const REAL_RECORDS = [
+  "night-lights",
+  "lightning-from-the-iss",
+  "geos-aerosols",
+  "ocean-currents"
+];
 
 const records = [
   {
