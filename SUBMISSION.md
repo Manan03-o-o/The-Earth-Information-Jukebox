@@ -17,7 +17,7 @@ TODO BEFORE FINAL SUBMISSION:
 ### Short Description (150 words)
 EarthSonic transforms NASA Earth Information Center (EIC) visual data into an interactive, real-time auditory jukebox. While satellite imagery provides breathtaking views of our dynamic planet, visual data remains inaccessible to over 285 million blind and low-vision individuals. EarthSonic bridges this gap through multi-sensory sonification, converting visual frames into expressive, spatially-aware soundscapes directly inside the web browser. 
 
-Using a custom scanline audio engine powered by Tone.js, pixel brightness maps to melodic pitch, latitude governs spatial stereo panning, optical changes trigger percussive accents, and spectral hues drive instrument timbre. Users explore global night light evolution, orbital lightning strikes, aerosol plumes, and ocean boundary currents through sound. Built with accessibility at its heart, EarthSonic features WCAG 2.1 AA compliance, screen-reader audio descriptions, high-contrast modes, and a one-click guided tour—making NASA’s planetary observations hearable by everyone.
+Using a custom scanline audio engine powered by Tone.js, pixel brightness maps to melodic pitch, horizontal position controls stereo panning, optical changes trigger percussive accents, and spectral hues drive instrument timbre. Users explore global night light evolution, orbital lightning strikes, aerosol plumes, and ocean boundary currents through sound. Built with accessibility at its heart, EarthSonic features WCAG 2.1 AA compliance, screen-reader audio descriptions, high-contrast modes, and a one-click guided tour—making NASA’s planetary observations hearable by everyone.
 
 ---
 

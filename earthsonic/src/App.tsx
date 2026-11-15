@@ -337,7 +337,12 @@ function App() {
           </div>
         </div>
 
-        <div className="mapping-table-wrap">
+        <div
+          className="mapping-table-wrap"
+          tabIndex={0}
+          role="region"
+          aria-label="Sonification mapping table, scrollable"
+        >
           <h3>Sonification Mapping Parameters</h3>
           <table className="mapping-table">
             <thead>
@@ -416,7 +421,7 @@ function App() {
           <div className="a11y-card">
             <div className="a11y-icon"><Contrast size={24} /></div>
             <h3>High Contrast Mode</h3>
-            <p>Dedicated high-contrast toggle enforces pure black backgrounds with vibrant cyan, amber, and white exceeding WCAG AAA standards.</p>
+            <p>Dedicated high-contrast toggle enforces pure black backgrounds with vibrant cyan, amber, and white with strong contrast.</p>
           </div>
 
           <div className="a11y-card">

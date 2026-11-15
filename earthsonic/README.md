@@ -2,7 +2,7 @@
 > **NASA Space Apps Challenge 2026** | *Challenge: The Earth Information Jukebox*
 
 [![NASA Space Apps](https://img.shields.io/badge/NASA%20Space%20Apps-2026-blue.svg)](https://www.spaceappschallenge.org/)
-[![Accessibility: WCAG 2.1 AA](https://img.shields.io/badge/A11y-WCAG%202.1%20AA%20Pass-brightgreen.svg)](scripts/audit-a11y.mjs)
+Automated axe-core audit: 0 violations (scripts/audit-a11y.mjs)
 [![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
 [![Zero External Audio CDN](https://img.shields.io/badge/Tone.js-Bundled%20Offline-orange.svg)](public/vendor/Tone.js)
 
@@ -20,7 +20,7 @@ TODO FOR SUBMISSION:
 ## 📖 Short Description (150 Words)
 EarthSonic transforms NASA Earth Information Center (EIC) visual data into an interactive, real-time auditory jukebox. While satellite imagery provides breathtaking views of our dynamic planet, visual data remains inaccessible to over 285 million blind and low-vision individuals. EarthSonic bridges this gap through multi-sensory sonification, converting visual frames into expressive, spatially-aware soundscapes directly inside the web browser.
 
-Using a custom scanline audio engine powered by Tone.js, pixel brightness maps to melodic pitch, latitude governs spatial stereo panning, optical changes trigger percussive accents, and spectral hues drive instrument timbre. Users explore global night light evolution, orbital lightning strikes, aerosol plumes, and ocean boundary currents through sound. Built with accessibility at its heart, EarthSonic features WCAG 2.1 AA compliance, screen-reader audio descriptions, high-contrast modes, and a one-click guided tour—making NASA’s planetary observations hearable by everyone.
+Using a custom scanline audio engine powered by Tone.js, pixel brightness maps to melodic pitch, horizontal position controls stereo panning, optical changes trigger percussive accents, and spectral hues drive instrument timbre. Users explore global night light evolution, orbital lightning strikes, aerosol plumes, and ocean boundary currents through sound. Built with accessibility at its heart, EarthSonic features WCAG 2.1 AA compliance, screen-reader audio descriptions, high-contrast modes, and a one-click guided tour—making NASA’s planetary observations hearable by everyone.
 
 ---
 
@@ -77,7 +77,7 @@ EarthSonic is built with scientific transparency. Records automatically scan the
 ```
 
 1. **Brightness $\to$ Pitch:** Luminosity of pixels under the scanline dictates frequency. High brightness yields higher octaves; dark regions produce deep bass drones.
-2. **Y-Coordinate (Latitude) $\to$ Stereo Pan:** Spatial position on the globe maps across the stereo field from -1 (far left) to +1 (far right).
+2. **X-Coordinate (Horizontal Position) $\to$ Stereo Pan:** Spatial position across the frame maps across the stereo field from -1 (far left) to +1 (far right).
 3. **Temporal Delta $\to$ Percussion:** Sudden optical changes between consecutive frames (such as lightning flashes) trigger membrane kicks and high-frequency noise transients.
 4. **Color & Hue $\to$ Timbre:** In aerosol and ocean modes, particle colors determine which instrument voice triggers (e.g. orange dust $\to$ marimba, blue sea salt $\to$ cello pad).
 5. **Scientific vs. Artistic Modes:** 

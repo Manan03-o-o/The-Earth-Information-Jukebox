@@ -66,7 +66,7 @@ footer{max-width:1400px;margin:auto;padding:20px;color:var(--mut);border-top:1px
 
 <!-- Collapsed Title Bar (Preserves h1#h1 and #hb for zero breakage) -->
 <div class="studio-bar">
-  <h1 id="h1">EarthSonics Studio — Hear the Planet Change</h1>
+  <h1 id="h1">EARTHSONIC STUDIO</h1>
   <div class="globe" aria-hidden="true" style="display:none"><i></i><div class="bars" id="hb"></div></div>
 </div>
 
@@ -249,9 +249,12 @@ function preloadFramesForRecord(slug, onComplete) {
 
 function preloadAllFrames() {
   Object.keys(REAL_FRAMES).forEach(slug => {
-    preloadFramesForRecord(slug, () => {
+    preloadFramesForRecord(slug, (loaded) => {
       if (REC[ri] && REC[ri].slug === slug) {
         updateBadge();
+        if (loaded && loaded.length >= 2) {
+          say(describe(), true);
+        }
       }
     });
   });
@@ -462,7 +465,7 @@ function setRecord(i){
         if (b2) b2.textContent = 'end';
         if (yl) yl.style.display = 'none';
       }
-      say(describe(), false);
+      say(describe(), true);
     }
   });
 
