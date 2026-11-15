@@ -35,6 +35,7 @@ canvas{width:100%;height:auto;display:block;border-radius:10px}#mc{background:#0
 .sci{max-width:1100px;margin:auto;padding:10px 20px 20px}.sci p,.sci li{max-width:75ch;color:var(--mut)}.sci dt{color:var(--ink);font-weight:700;margin-top:8px}.sci dd{margin:0;color:var(--mut)}
 footer{max-width:1400px;margin:auto;padding:20px;color:var(--mut);border-top:1px solid var(--line);font-size:13px}
 @media(max-width:1000px){.studio,.hero{grid-template-columns:1fr}.stage{grid-template-columns:90px 1fr}}
+.top{flex-wrap:wrap;gap:6px 14px}.top nav{display:flex;flex-wrap:wrap;gap:4px 14px}.top nav a{margin-left:0}
 </style></head><body>
 <a class="skip sr" href="#studio">Skip to studio</a>
 <header class="top"><b>EARTH<span>SONIC</span></b><nav aria-label="Sections"><a href="./">Home</a><a href="#studio">Studio</a><a href="#science">Science</a><a href="#about">Attribution</a></nav></header>
@@ -295,8 +296,7 @@ function triggerNotes(R,f,col){
   else if(ri==1){
     let h=0;for(let y=0;y<GH&&h<3;y++){
       const b=f.br[px(y)];
-      if(b>.6){
-        const fq=Tone.Frequency(SCALE[mapToScale(1-y/GH)]).toFrequency()/2;
+      if(b>.3){const fq=Tone.Frequency(SCALE[mapToScale(1-y/GH)]).toFrequency()/2;
         A.kick.triggerAttackRelease(fq,'16n',now+h*.03,Math.min(1,b*I));
         h++;note(y,'#e879f9')
       }
@@ -504,8 +504,9 @@ function tick(now){
     R.gen(sc,p,f,fr);
   }
   gc.drawImage(sc.canvas,0,0,GW,GH);
-  if(f!==cf){cf=f;if(ri){prev=lastBr}if(ri==1&&F){let c=0;for(let by=0;by<6;by++)for(let bx=0;bx<8;bx++){let m=0;for(let y=0;y<6;y++)for(let x=0;x<8;x++)m=Math.max(m,F.br[(by*6+y)*GW+bx*8+x]);if(m>.7)c++}ev+=c}}
+  const newFrame=(f!==cf);if(newFrame){cf=f;if(ri){prev=lastBr}}
   const nf=analyzeFrame(gc.getImageData(0,0,GW,GH).data,ri==0?base:(prev||lastBr));prevCx=F?F.cx:.5;F=nf;lastBr=F.br;
+  if(newFrame&&ri==1){let c=0;for(let by=0;by<6;by++)for(let bx=0;bx<8;bx++){let m=0;for(let y=0;y<6;y++)for(let x=0;x<8;x++)m=Math.max(m,F.br[(by*6+y)*GW+bx*8+x]);if(m>.3)c++}ev+=c}
   const x=(t/SWEEP)%1,col=Math.min(GW-1,Math.floor(x*GW));
   if(playing&&col!==lastCol){lastCol=col;generateSoundscape(R,F,col)}
   mc.drawImage(sc.canvas,0,0);if(!rm||playing)drawScanLine(x);
